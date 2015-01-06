@@ -38,8 +38,16 @@ options:
 	tag: &7[&1R&2A&3I&4N&5B&6O&8W&9 R&AU&BS&CH&7] 
 	noperm: &4Nie masz uprawnien do uzycia tej komendy
 
-command /rainbowrush [<text>] [<number>]:
+command /rainbowrush [<text>] [<text>] [<text>]:
+	aliases: rr, rush, rainbow,
 	trigger:
+		if arg 1 is "version" or "ver":
+			if player has permission "rr.version" or "rr.*":
+				send "&9RainBowRush &7versions:"
+				send json "&c0.1.1" tooltip "ChangeLog wersji &c0.1.1" run "/rr changelog 0.1.1"
+				stop
+			send "%{rr.prefix}% %{rr.no-perm}%"
+			stop
 		if arg 1 is "graj":
 			arg 2 is less than {liczba.aren}:
 #----------------------------------------------#
