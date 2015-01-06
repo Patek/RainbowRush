@@ -2,5 +2,5 @@ RainbowRush
 ===========
 
 Authors:
-*Patek
-*Herhor67
+* Patek
+* Herhor67
