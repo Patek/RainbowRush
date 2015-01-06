@@ -1,1 +1,121 @@
-#Code
+variables:
+	{zajety.zielony.1} = false
+	{zajety.czerwony.1} = false
+	{zajety.zolty.1} = false
+	{zajety.niebieski.1} = false
+#----------#
+	{zajety.zielony.2} = false
+	{zajety.czerwony.2} = false
+	{zajety.zolty.2} = false
+	{zajety.niebieski.2} = false
+#----------#
+	{zajety.zielony.3} = false
+	{zajety.czerwony.3} = false
+	{zajety.zolty.3} = false
+	{zajety.niebieski.3} = false
+#----------#
+	{zajety.zielony.4} = false
+	{zajety.czerwony.4} = false
+	{zajety.zolty.4} = false
+	{zajety.niebieski.4} = false
+#----------#
+	{zajety.zielony.5} = false
+	{zajety.czerwony.5} = false
+	{zajety.zolty.5} = false
+	{zajety.niebieski.5} = false
+#----------#
+	{klasa.%player%} = 0
+	{granie.%player%} = false
+	{liczba.aren} = 0
+#----------#  
+	{gra.1} = false
+	{gra.2} = false
+	{gra.3} = false
+	{gra.4} = false
+	{gra.5} = false
+
+options:
+	tag: &7[&1R&2A&3I&4N&5B&6O&8W&9 R&AU&BS&CH&7] 
+	noperm: &4Nie masz uprawnien do uzycia tej komendy
+
+command /rainbowrush [<text>] [<number>]:
+	trigger:
+		if arg 1 is "graj":
+			arg 2 is less than {liczba.aren}:
+#----------------------------------------------#
+				{zajety.zielony.%arg 2%} is false:
+					set {klasa.%player%} to 1
+					set {granie.%player%} to true
+					set {oczekiwanie.%player%} to true
+					teleport player to {spawn.%arg 2%}
+					set {_zielony.%arg 2%} to player
+#----------------------------------------------#
+				else if {zajety.czerowny.%arg 2%} is false:
+					set {klasa.%player%} to 2
+					set {granie.%player%} to true
+					teleport player to {spawn.%arg 2%}
+					set {oczekiwanie.%player%} to true
+					set {_czerwony.%arg 2%} to player
+#----------------------------------------------#
+				else if {zajety.niebieski.%arg 2%} is false:
+					set {klasa.%player%} to 3
+					set {granie.%player%} to true
+					teleport player to {spawn.%arg 2%}
+					set {oczekiwanie.%player%} to true
+					set {_niebieski.%arg 2%} to player
+#----------------------------------------------#
+				else if {zajety.zolty.%arg 2%} is false:
+					set {klasa.%player%} to 4
+					set {granie.%player%} to true
+					teleport player to {spawn.%arg 2%}
+					set {oczekiwanie.%player%} to true
+					set {_zielony.%arg 2%} to player
+#=====================================#
+					set {gra.%arg 2%} to true
+					loop players in region "malarz%arg 2%":
+					send "{@tag}&6 Za 5 sekund rozpocznie sie gra!" to loop-player
+					wait 1 second
+					send "{@tag}&6 Za 4 sekundy rozpocznie sie gra!" to loop-player
+					wait 1 second
+					send "{@tag}&6 Za 3 sekundy rozpocznie sie gra!" to loop-player
+					wait 1 second
+					send "{@tag}&6 Za 2 sekundy rozpocznie sie gra!" to loop-player
+					wait 1 second
+					send "{@tag}&6 Za sekunde rozpocznie sie gra!" to loop-player
+					wait 1 second
+					send "{@tag} &aGra sie rozpoczela!" to loop-player
+					set {oczekiwanie.%loop-player%} to false
+					send "&6Masz {@czas} sekund zeby zamalowac jak najwieksza ilosc blokow na swoj kolor!
+					wait {@czas} seconds
+					set {oczekiwanie.%loop-player%} to true
+					send "{@tag} &cKoniec gry. Podliczanie wynikow..." to loop-player
+					wait 3 seconds
+					loop blocks in region "malarz%arg 2%":
+						if loop-block is green stained clay:
+							add 1 to {_zielone.%arg 2%}
+						if loop-block is yellow stained clay: 
+							add 1 to {_zolte.%arg 2%}
+						loop-block is red stained clay:
+							add 1 to {_czerwone.%arg 2%}
+						loop-block is blue stained clay:
+							add 1 to {_niebieskie.%arg 2%}
+						if {_czerwone.%arg 2%} > {_zolte.%player%}:
+							if {_czerwone.%arg 2%} is greater than {_zielone.%arg 2%}:
+						if {_czerwone.%arg 2%} is greater than {_niebieskie.%arg 2%}:
+				else:
+					send "{@tag} &cTa arena jest pelna, sprobuj na innej"
+
+every tick:
+	loop all players:
+		if {granie.%loop-player%} is true:
+			if {oczekiwanie.%loop-player%} is false:
+				if block below loop-player isn't sponge:
+					{klasa.%loop-player%} is 1:
+						set block below loop-player to green stained clay
+					else if {klasa.%loop-player%} is 2:
+						set block below player to red stained clay
+					else if {klasa.%loop-player%} is 3:
+						set block below loop-player to blue stained clay
+					else if {klasa.%loop-player%} is 4:
+						set block below loop-player to yellow stained clay
+
