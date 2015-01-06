@@ -33,11 +33,8 @@ variables:
 	{gra.3} = false
 	{gra.4} = false
 	{gra.5} = false
-
-options:
-	tag: &7[&1R&2A&3I&4N&5B&6O&8W&9 R&AU&BS&CH&7] 
-	noperm: &4Nie masz uprawnien do uzycia tej komendy
-
+on load:
+	set {rr.prefix} to value "options.prefix" get of "plugins/Skript/scripts/RainbowRush/config.yml"
 command /rainbowrush [<text>] [<text>] [<text>]:
 	aliases: rr, rush, rainbow,
 	trigger:
