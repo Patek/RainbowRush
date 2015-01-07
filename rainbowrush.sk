@@ -1,40 +1,20 @@
-variables:
-	{zajety.zielony.1} = false
-	{zajety.czerwony.1} = false
-	{zajety.zolty.1} = false
-	{zajety.niebieski.1} = false
-#----------#
-	{zajety.zielony.2} = false
-	{zajety.czerwony.2} = false
-	{zajety.zolty.2} = false
-	{zajety.niebieski.2} = false
-#----------#
-	{zajety.zielony.3} = false
-	{zajety.czerwony.3} = false
-	{zajety.zolty.3} = false
-	{zajety.niebieski.3} = false
-#----------#
-	{zajety.zielony.4} = false
-	{zajety.czerwony.4} = false
-	{zajety.zolty.4} = false
-	{zajety.niebieski.4} = false
-#----------#
-	{zajety.zielony.5} = false
-	{zajety.czerwony.5} = false
-	{zajety.zolty.5} = false
-	{zajety.niebieski.5} = false
-#----------#
-	{klasa.%player%} = 0
-	{granie.%player%} = false
-	{liczba.aren} = 0
-#----------#  
-	{gra.1} = false
-	{gra.2} = false
-	{gra.3} = false
-	{gra.4} = false
-	{gra.5} = false
+
 on load:
 	set {rr.prefix} to value "options.prefix" get of "plugins/Skript/scripts/RainbowRush/config.yml"
+# Downloading new version of script.
+	set {_version.current} to first 7 characters of content of file "plugins/Skript/scripts/%script%.sk"
+	replace all  "##" with "" in {_version.current}
+	set {_version.check} to result of connect "#Raw from GitHub"
+	set {_version.new} to first 7 characters of {_version.check}
+	if {_version.current} is not {_version.new}:
+		send "%{rr.prefix}% New version of RainbowRush is available!" to console
+		send "%{rr.prefix}% Downloading version &a%{_version.new}%" to console
+		download "" to "plugins/Skript/scripts/%script%.sk" 
+		wait 1 seconds
+		send "%{rr.prefix}% Downloading succesfull!" to console
+		stop
+	send "%{rr.prefix}% You have the current version of script!"  to console
+	send "%{rr.prefix}% Your version is: %{_version.current}%" to  console
 command /rainbowrush [<text>] [<text>] [<text>]:
 	aliases: rr, rush, rainbow,
 	trigger:
@@ -45,6 +25,16 @@ command /rainbowrush [<text>] [<text>] [<text>]:
 				stop
 			send "%{rr.prefix}% %{rr.no-perm}%"
 			stop
+		if arg 1 is "help" or "?":
+			if player has permission "rr.version" or "rr.*":
+				send "&9--------------------------------------------"
+				send "&c&l             RainbowRush                  "
+				send " &6>> &f/rr create [Arena] - &7Create arena!"
+				send "&7         by &5&lPatek , Herhor67            "
+				send "&9--------------------------------------------"
+				stop
+			send "%{rr.prefix}% %{rr.no-perm}%"
+			stop			
 		if arg 1 is "graj":
 			arg 2 is less than {liczba.aren}:
 #----------------------------------------------#
