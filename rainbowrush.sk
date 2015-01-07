@@ -1,6 +1,7 @@
 
 on load:
 	set {rr.prefix} to value "options.prefix" get of "plugins/Skript/scripts/RainbowRush/config.yml"
+	set {rr.lang} to value "options.lang" get of "plugins/Skript/scripts/RainbowRush/config.yml"
 # Downloading new version of script.
 	set {_version.current} to first 7 characters of content of file "plugins/Skript/scripts/%script%.sk"
 	replace all  "##" with "" in {_version.current}
@@ -30,6 +31,7 @@ command /rainbowrush [<text>] [<text>] [<text>]:
 				send "&9--------------------------------------------"
 				send "&c&l             RainbowRush                  "
 				send " &6>> &f/rr create [Arena] - &7Create arena!"
+				send " &6>> &f/rr remove [Arena] - &7Delete arena!"
 				send "&7         by &5&lPatek , Herhor67            "
 				send "&9--------------------------------------------"
 				stop
