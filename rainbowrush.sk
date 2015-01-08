@@ -22,7 +22,7 @@ command /rainbowrush [<text>] [<text>] [<text>]:
 		if arg 1 is "version" or "ver":
 			if player has permission "rr.version" or "rr.*":
 				send "&9RainBowRush &7versions:"
-				send json "&c0.1.1" tooltip "ChangeLog wersji &c0.1.1" run "/rr changelog 0.1.1"
+				send json "&c0.1.1" tooltip "ChangeLog of version &c0.1.1" run "/rr changelog 0.1.1"
 				stop
 			send "%{rr.prefix}% %{rr.no-perm}%"
 			stop
