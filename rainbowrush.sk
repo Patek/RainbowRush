@@ -2,6 +2,7 @@
 on load:
 	set {rr.prefix} to value "options.prefix" get of "plugins/Skript/scripts/RainbowRush/config.yml"
 	set {rr.lang} to value "options.lang" get of "plugins/Skript/scripts/RainbowRush/config.yml"
+	set {rr.msg.help.create} to value "message.help.create" get of "plugins/Skript/scripts/RainbowRush/lang_%{rr.lang}%.yml"
 # Downloading new version of script.
 	set {_version.current} to first 7 characters of content of file "plugins/Skript/scripts/%script%.sk"
 	replace all  "##" with "" in {_version.current}
@@ -30,13 +31,24 @@ command /rainbowrush [<text>] [<text>] [<text>]:
 			if player has permission "rr.version" or "rr.*":
 				send "&9--------------------------------------------"
 				send "&c&l             RainbowRush                  "
-				send " &6>> &f/rr create [Arena] - &7Create arena!"
-				send " &6>> &f/rr remove [Arena] - &7Delete arena!"
-				send "&7         by &5&lPatek , Herhor67            "
+				send "              %{rr.page}% (1/2)               "
+				send " &6>> %{rr.msg.help.create}%"
+				send " &6>> %{rr.msg.help.delete}%"
+				send " &6>> %{rr.msg.help.status}%"
+				send " &6>> %{rr.msg.help.join}%"
+				send " &6>> %{rr.msg.help.leave}%"
+				send " &6>> %{rr.msg.help.spectate}%"
 				send "&9--------------------------------------------"
 				stop
 			send "%{rr.prefix}% %{rr.no-perm}%"
-			stop			
+			stop
+		if arg 1 is "info" or "information":
+				send "&9--------------------------------------------"
+				send "&c&l             RainbowRush                  "
+				send "           &fby &5&lPatek, herhor67           "
+				send json "&6>> &f%{rr.msg.help.version}% &a&l%{rr.msg.help.version.check}%" run "/rr version" 
+				send "&9--------------------------------------------"
+				stop			
 		if arg 1 is "graj":
 			arg 2 is less than {liczba.aren}:
 #----------------------------------------------#
